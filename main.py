@@ -3,15 +3,20 @@ from ai import analize_audio
 from drive import Drive
 
 import os
+from dotenv import load_dotenv
 
 # todo: add log, remove files from temp folder, convert response to json, send email
 
 # runs only if file is main
-if __name__ == "__main__":
+
+def app():
+    load_dotenv()
+    path = os.getenv("VIDEO_PATH")
+
     drive = Drive()
     drive.authorize()
 
-    path = os.getenv("VIDEO_PATH")
+    
     files = drive.get_content(path=path, mime_type="video")
     
     for f in files:
@@ -22,3 +27,7 @@ if __name__ == "__main__":
         res = analize_audio(audio_path)
         
         print(res)
+    
+
+if __name__ == "__main__":
+    app()

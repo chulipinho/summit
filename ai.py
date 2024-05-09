@@ -2,7 +2,9 @@ from pathlib import Path
 import hashlib
 import google.generativeai as genai
 import os
+from dotenv import load_dotenv
 
+load_dotenv()
 genai.configure(api_key=os.getenv("API_KEY"))
 
 # Set up the model
@@ -56,9 +58,13 @@ def analize_audio(path):
 		*upload_if_needed(path),
 	]
 
-	response = model.generate_content(prompt_parts)
+	response = model.generate_content(prompt_parts, request_options={"timeout": 100})
 	print(response.text)
 	for uploaded_file in uploaded_files:
 		genai.delete_file(name=uploaded_file.name)
-
+  	
 	return response
+
+if __name__ == "__main__":
+	res = analize_audio("tmp\Product Marketing Meeting (weekly) 2021-06-28 (480p).mp3")
+	print(res)
