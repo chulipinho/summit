@@ -1,6 +1,7 @@
 from video import extract_audio
 from ai import analize_audio
 from drive import Drive
+from utils import clear_tmp
 
 import os
 from dotenv import load_dotenv
@@ -10,12 +11,6 @@ from dotenv import load_dotenv
 load_dotenv()
 CLEAR_TMP = os.getenv("CLEAR_TMP", True)
 VIDEO_PATH = os.getenv("VIDEO_PATH", "meetings")
-
-def clear_tmp():
-    files = os.listdir("tmp")
-
-    for f in files:
-        os.remove("tmp/" + f)
 
 def app():
     path = VIDEO_PATH
