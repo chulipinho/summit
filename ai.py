@@ -4,6 +4,10 @@ import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 
+import logger
+
+log = logger.get_logger()
+
 load_dotenv()
 genai.configure(api_key=os.getenv("API_KEY"))
 
@@ -54,17 +58,19 @@ def upload_if_needed(pathname: str) -> list[str]:
 	return [uploaded_files[-1]]
 
 def analize_audio(path):
-	prompt_parts = [
+    prompt_parts = [
 		*upload_if_needed(path),
 	]
-
-	response = model.generate_content(prompt_parts, request_options={"timeout": 100})
-	print(response.text)
-	for uploaded_file in uploaded_files:
-		genai.delete_file(name=uploaded_file.name)
+	
+    log.info("Generating content")
+    response = model.generate_content(prompt_parts, request_options={"timeout": 100})
+    print(response.text)
+    for uploaded_file in uploaded_files:
+        genai.delete_file(name=uploaded_file.name)
   	
-	return response
+    return response
 
 if __name__ == "__main__":
 	res = analize_audio("tmp\Product Marketing Meeting (weekly) 2021-06-28 (480p).mp3")
 	print(res)
+	

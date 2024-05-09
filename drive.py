@@ -1,14 +1,19 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 import os
+import logger
+
+log = logger.get_logger()
 
 class Drive:
     def __init__(self):
+        log.info("Creating Drive object")
         self.gauth = GoogleAuth()
         self.port_number = os.getenv("PORT_NUBER", 3010)
         self.drive = None
         
     def authorize(self):
+        log.info("Authorizing")
         self.gauth.LocalWebserverAuth(port_numbers=[self.port_number])
         self.drive = GoogleDrive(self.gauth)
 
@@ -38,11 +43,18 @@ class Drive:
         return folder_id
         
     def get_content(self, path, mime_type=None):
+        log.info(f"Getting content from {path}")
         folder_id = self.get_folder_id(path)
 
         query = f"'{folder_id}' in parents"
         if mime_type:
             query += f" and mimeType contains '{mime_type}'"
 
-        return self.drive.ListFile({'q': query}).GetList()
+        try:
+            res = self.drive.ListFile({'q': query}).GetList()
+        except Exception as err:
+            log.error(f"Error reading files from {path}: {repr(err)}")
+            exit(0)
+
+        return res
         

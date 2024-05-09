@@ -1,25 +1,36 @@
+import logger
 from video import extract_audio
 from ai import analize_audio
 from drive import Drive
 from utils import clear_tmp
-
-import os
 from dotenv import load_dotenv
 
-# todo: add log, convert response to json, send email
+import os
 
+# todo: 
+# - refine answers
+# - convert response to json 
+# - send email
+
+# Load environment variables
 load_dotenv()
 CLEAR_TMP = os.getenv("CLEAR_TMP", True)
 VIDEO_PATH = os.getenv("VIDEO_PATH", "meetings")
+LOG_PATH = os.getenv("LOG_PATH", "log/summit.log")
 
-def app():
+def app():  
     path = VIDEO_PATH
 
+    log = logger.get_logger()
+    log.info("adler")
+
+    # Log into user's google drive
     drive = Drive()
     drive.authorize()
 
     files = drive.get_content(path=path, mime_type="video")
     
+    # Download files from drive, extract audio and sends to AI Studio.
     for f in files:
         path = "tmp/" + f["title"]
         f.GetContentFile(path)
