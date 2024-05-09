@@ -11,6 +11,12 @@ log = logger.get_logger()
 load_dotenv()
 genai.configure(api_key=os.getenv("API_KEY"))
 
+instruction_set = {
+	"simple": "Listen to the attached audio recording of a meeting and provide a concise summary of the key points discussed. Organize the summary by topic and conclude with the main outcomes or decisions reached.",
+	"detailed": "Analyze the attached audio recording of a meeting and generate a comprehensive report. Identify the main topics discussed, key arguments presented, and decisions made. Organize the report by topic and for each, include relevant details such as supporting evidence, dissenting opinions, and action items. Conclude with a summary of the meeting's overall objectives and effectiveness.",
+  "action": "Review the attached meeting recording and create an action-oriented summary. Identify key discussion points, decisions made, and assigned tasks. Organize the summary by topic and for each, clearly outline the next steps, responsible individuals, and deadlines. Conclude with a brief overview of the meeting's main goals and action plan."
+}
+
 # Set up the model
 generation_config = {
   "temperature": 1,
@@ -38,7 +44,7 @@ safety_settings = [
   },
 ]
 
-system_instruction = "Based on a given meeting recording, generate a summary covering the main topics discussed. Add a brief conclusion to the end. "
+system_instruction = instruction_set["simple"]
 
 model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               generation_config=generation_config,
@@ -68,7 +74,7 @@ def analize_audio(path):
     for uploaded_file in uploaded_files:
         genai.delete_file(name=uploaded_file.name)
   	
-    return response
+    return response.text
 
 if __name__ == "__main__":
 	res = analize_audio("tmp\Product Marketing Meeting (weekly) 2021-06-28 (480p).mp3")

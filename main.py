@@ -8,13 +8,12 @@ from dotenv import load_dotenv
 import os
 
 # todo: 
-# - refine answers
 # - convert response to json 
 # - send email
 
 # Load environment variables
 load_dotenv()
-CLEAR_TMP = os.getenv("CLEAR_TMP", True)
+CLEAR_TMP = my_env = os.getenv("CLEAR_TMP", 'true').lower() in ('true', '1', 't')
 VIDEO_PATH = os.getenv("VIDEO_PATH", "meetings")
 LOG_PATH = os.getenv("LOG_PATH", "log/summit.log")
 
