@@ -4,6 +4,7 @@ from ai import analize_audio
 from drive import Drive
 from utils import clear_tmp
 from dotenv import load_dotenv
+from mail import Mail
 
 import os
 
@@ -20,6 +21,9 @@ LOG_PATH = os.getenv("LOG_PATH", "log/summit.log")
 def app():  
     path = VIDEO_PATH
 
+    user_input = input("Insira os e-mails(separados por espaço) que irão receber os resumos das reuniões: ")
+    emails = user_input.split(" ")
+
     log = logger.get_logger()
     log.info("adler")
 
@@ -29,6 +33,8 @@ def app():
 
     files = drive.get_content(path=path, mime_type="video")
     
+    summaries = []
+
     # Download files from drive, extract audio and sends to AI Studio.
     for f in files:
         path = "tmp/" + f["title"]
@@ -37,10 +43,16 @@ def app():
         audio_path = extract_audio(path)
         res = analize_audio(audio_path)
         
-        print(res)
+        summaries.append(res)
+
+    email_content = "Aqui estão os resumos desta semana:\n\n\n"
+    email_content += "\n".join(summaries)
+
+    # Send e-mail with summaries
+    mail = Mail()
+    mail.send(email_content, "Resumos da semana", emails)
 
     if CLEAR_TMP: clear_tmp()
-    
 
 if __name__ == "__main__":
     app()

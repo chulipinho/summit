@@ -196,3 +196,5 @@ tmp/
 credentials.json
 
 response_samples/
+
+token.json
