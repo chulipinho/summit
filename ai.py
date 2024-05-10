@@ -9,6 +9,8 @@ import logger
 log = logger.get_logger()
 
 load_dotenv()
+LANGUAGE = os.getenv("LANGUAGE", "PT-BR")
+
 genai.configure(api_key=os.getenv("API_KEY"))
 
 instruction_set = {
@@ -16,6 +18,11 @@ instruction_set = {
 	"detailed": "Analyze the attached audio recording of a meeting and generate a comprehensive report. Identify the main topics discussed, key arguments presented, and decisions made. Organize the report by topic and for each, include relevant details such as supporting evidence, dissenting opinions, and action items. Conclude with a summary of the meeting's overall objectives and effectiveness.",
   "action": "Review the attached meeting recording and create an action-oriented summary. Identify key discussion points, decisions made, and assigned tasks. Organize the summary by topic and for each, clearly outline the next steps, responsible individuals, and deadlines. Conclude with a brief overview of the meeting's main goals and action plan."
 }
+
+instruction = instruction_set["simple"]
+
+if LANGUAGE == "PT-BR":
+  instruction += "\nTraduza o resultado para português brasileiro."
 
 # Set up the model
 generation_config = {
@@ -44,7 +51,7 @@ safety_settings = [
   },
 ]
 
-system_instruction = instruction_set["simple"]
+system_instruction = instruction
 
 model = genai.GenerativeModel(model_name="gemini-1.5-pro-latest",
                               generation_config=generation_config,
@@ -69,8 +76,8 @@ def analize_audio(path):
 	]
 	
     log.info("Generating content")
-    response = model.generate_content(prompt_parts, request_options={"timeout": 100})
-    print(response.text)
+    response = model.generate_content(prompt_parts, request_options={"timeout": 200})
+
     for uploaded_file in uploaded_files:
         genai.delete_file(name=uploaded_file.name)
   	
