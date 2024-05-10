@@ -9,8 +9,7 @@ from mail import Mail
 import os
 
 # todo: 
-# - convert response to json 
-# - send email
+# - Format mail
 
 # Load environment variables
 load_dotenv()
@@ -21,11 +20,10 @@ LOG_PATH = os.getenv("LOG_PATH", "log/summit.log")
 def app():  
     path = VIDEO_PATH
 
+    log = logger.get_logger()
+
     user_input = input("Insira os e-mails(separados por espaço) que irão receber os resumos das reuniões: ")
     emails = user_input.split(" ")
-
-    log = logger.get_logger()
-    log.info("adler")
 
     # Log into user's google drive
     drive = Drive()
@@ -43,7 +41,8 @@ def app():
         audio_path = extract_audio(path)
         res = analize_audio(audio_path)
         
-        summaries.append(res)
+        summary_title = ".".join(f["title"].split(".")[:-1])
+        summaries.append(f"{summary_title}:\n{res}")
 
     email_content = "Aqui estão os resumos desta semana:\n\n\n"
     email_content += "\n".join(summaries)

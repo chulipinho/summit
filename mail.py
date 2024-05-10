@@ -69,7 +69,7 @@ class Mail:
                 .execute()
             )
 
-            log.info("E-mail sent successfully")
+            log.info(f"E-mail sent to {', '.join(to)} successfully")
 
         except HttpError as error:
             print(f"An error occurred: {error}")
