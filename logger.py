@@ -3,6 +3,9 @@ import sys
 import os
 from dotenv import load_dotenv
 
+if not os.path.exists("log"):
+    os.makedirs("log")
+
 load_dotenv()
 LOG_PATH = os.getenv("LOG_PATH", "log/summit.log")
 
