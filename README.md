@@ -2,31 +2,27 @@
 
 O Summit é uma ferramenta que utiliza a API do Google e a inteligência artificial para gerar resumos automáticos das suas reuniões do Google Meet.
 
-### Funcionalidades:
+### Aplicações práticas:
 
-- **Acesse suas gravações**: O Summit conecta-se ao seu Google Drive para buscar automaticamente as gravações das suas reuniões da última semana.
+**Ambiente empresarial**:
 
-- **Resumos inteligentes**: A inteligência artificial do Google resume cada reunião, capturando os pontos chave e as decisões tomadas.
+- O Summit é a ferramenta ideal para empresas que desejam fornecer um resumo semanal aos seus colaboradores.
+- Com apenas um clique, o Summit gera e distribui resumos detalhados para todos os emails fornecidos, otimizando a comunicação interna e o compartilhamento de informações.
 
-- **Emails personalizados**: Os resumos são enviados por email para os participantes da reunião e outros destinatários que você especificar.
+**Uso pessoal**:
 
-### Benefícios:
-
-- **Economize tempo**: Obtenha rapidamente os pontos principais de suas reuniões sem precisar assistir a tudo novamente.
-
-- **Melhore a comunicação**: Garanta que todos os participantes estejam na mesma página e acompanhem as decisões tomadas.
-
-- **Aumente a produtividade**: Tome decisões mais rapidamente e mantenha seus projetos em andamento.
+- O Summit é perfeito para usuários que precisam se organizar em meio a diversas reuniões.
+- Obtenha resumos instantâneos de cada reunião, permitindo que você se concentre nos pontos mais importantes e tome decisões mais eficazes.
 
 ## Índice
 
-1. [Instalação](#instalacao)
+1. [Instalação](#instalação)
 
-2. [Utilização](#utilizacao)
+2. [Utilização](#utilização)
 
 3. [Como funciona](#como-funciona)
 
-4. [Observações](#observacoes)
+4. [Observações](#observações)
 
 5. [Contato](#contato)
 
