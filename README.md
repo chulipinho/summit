@@ -90,9 +90,9 @@ python main.py
 ```
 
 2. **Siga as instruções na tela**:
-- Informe os emails dos destinatários que receberão os resumos.
-
 - Autentique-se com sua conta do Google.
+
+- Informe os emails dos destinatários que receberão os resumos.
 
 **O Summit processará suas gravações de reuniões e enviará os resumos por email para os destinatários especificados.**
 
