@@ -19,10 +19,13 @@ instruction_set = {
   "action": "Review the attached meeting recording and create an action-oriented summary. Identify key discussion points, decisions made, and assigned tasks. Organize the summary by topic and for each, clearly outline the next steps, responsible individuals, and deadlines. Conclude with a brief overview of the meeting's main goals and action plan."
 }
 
-instruction = instruction_set["simple"]
+instruction_set_pt = {
+  "simple": "Ouça a gravação de áudio anexada de uma reunião e forneça um resumo em português conciso dos principais pontos discutidos. Organize o resumo por tópico e conclua com os principais resultados ou decisões tomadas.",
+  "detailed": "Analise a gravação de áudio anexada de uma reunião e gere um relatório completo em português. Identifique os principais tópicos discutidos, os principais argumentos apresentados e as decisões tomadas. Organize o relatório por tópico e, para cada um, inclua detalhes relevantes, como evidências de apoio, opiniões divergentes e itens de ação. Conclua com um resumo dos objetivos gerais e da eficácia da reunião.",
+  "action": "Revise a gravação da reunião anexada e crie um resumo em português orientado para a ação. Identifique os principais pontos de discussão, decisões tomadas e tarefas atribuídas. Organize o resumo por tópico e, para cada um, delineie claramente as próximas etapas, os responsáveis e os prazos. Conclua com uma breve visão geral dos principais objetivos da reunião e do plano de ação."
+}
 
-if LANGUAGE == "PT-BR":
-  instruction += "\nTraduza o resultado para português brasileiro."
+instruction = instruction_set["simple"] if LANGUAGE != "PT-BR" else instruction_set_pt["simple"]
 
 # Set up the model
 generation_config = {

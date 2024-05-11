@@ -1,15 +1,14 @@
 import logger
 from video import extract_audio
 from ai import analize_audio
-from utils import clear_tmp
+from utils import clear_tmp, format_summary
 from google_services import GoogleServices
 
 from dotenv import load_dotenv
 import os
 
 # todo: 
-# - Format mail
-# - Change drive api
+# - user interface
 
 # Load environment variables
 load_dotenv()
@@ -42,10 +41,10 @@ def app():
         res = analize_audio(audio_path)
         
         summary_title = ".".join(f["name"].split(".")[:-1])
-        summaries.append(f"{summary_title}:\n{res}")
+        summaries.append(format_summary(f"{summary_title} {res}:"))
 
-    email_content = "Aqui estão os resumos desta semana:\n\n\n"
-    email_content += "\n".join(summaries)
+    email_content = "Aqui estão os resumos desta semana:\n\n"
+    email_content += "\n\n\n".join(summaries)
 
     # Send e-mail with summaries
     mail = google_service.mail
