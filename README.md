@@ -1,131 +1,132 @@
-# Summit: Resumo Automático de Reuniões do Google Meet
+# Summit: Automatic Meeting Summaries
+[![pt-br](https://img.shields.io/badge/lang-pt--br-green.svg)](https://github.com/chulipinho/summit/blob/master/README.pt-br.md)
 
-O Summit é uma ferramenta que utiliza a API do Google e a inteligência artificial para gerar resumos automáticos das suas reuniões do Google Meet.
+Summit is a tool that uses Google Cloud's AI Platform and artificial intelligence to generate automatic summaries of your Google Meet meetings.
 
-### Aplicações práticas:
+### Practical Applications:
 
-**Ambiente empresarial**:
+**Business Environment**:
 
-- O Summit é a ferramenta ideal para empresas que desejam fornecer um resumo semanal aos seus colaboradores.
-- Com apenas um clique, o Summit gera e distribui resumos detalhados para todos os emails fornecidos, otimizando a comunicação interna e o compartilhamento de informações.
+* Summit is the ideal tool for companies that want to provide a weekly summary to their employees.
+* With just one click, Summit generates and distributes detailed summaries to all provided emails, optimizing internal communication and information sharing.
 
-**Uso pessoal**:
+**Personal Use**:
 
-- O Summit é perfeito para usuários que precisam se organizar em meio a diversas reuniões.
-- Obtenha resumos instantâneos de cada reunião, permitindo que você se concentre nos pontos mais importantes e tome decisões mais eficazes.
+* Summit is perfect for users who need to stay organized amidst multiple meetings.
+* Get instant summaries of each meeting, allowing you to focus on the most important points and make more effective decisions.
 
-## Índice
+## Index
 
-1. [Instalação](#instalação)
+1. [Installation](#installation)
 
-2. [Utilização](#utilização)
+2. [Usage](#usage)
 
-3. [Como funciona](#como-funciona)
+3. [How it Works](#how-it-works)
 
-4. [Observações](#observações)
+4. [Notes](#notes)
 
-5. [Contato](#contato)
+5. [Contact](#contact)
 
-## Instalação
+## Installation
 
-**Pré-requisitos**:
+**Prerequisites**:
 
-- Python 3.6 ou superior
+* Python 3.6 or higher
 
-- Pip
+* Pip
 
-- Conta no Google Cloud Platform
+* Google Cloud Platform Account
 
-- Conta no Google Workspace
+* Google Workspace Account
 
-**Passos**:
+**Steps**:
 
-1. **Clone o repositório**:
+1. **Clone the repository**:
 
 ```bash
 git clone https://github.com/chulipinho/summit
 ```
 
-2. **Instale as dependências:**
+2. **Install dependencies**:
 
 ```bash
 cd summit
 python -m pip install -r requirements.txt
 ```
 
-3. **Crie o arquivo** `.env`:
+3. **Create the `.env` file**:
 
-Crie um arquivo chamado `.env` na pasta raiz do projeto e adicione as seguintes informações:
+Create a file named `.env` in the project's root directory and add the following information:
 
 ```
-API_KEY=sua_chave_de_api_do_ai_studio  # Sua chave de API do Ai Studio
-VIDEO_PATH=reunioes                   # O nome da pasta onde estão as gravações no Google Drive
+API_KEY=your_ai_studio_api_key  # Your Ai Studio API Key
+VIDEO_PATH=meetings          # The name of the folder where recordings are located in Google Drive
 
-
-# Outras configurações opcionais
-# CLEAR_TMP: Booleano - Define se o conteúdo da pasta tmp será apagado após a execução
-# LOG_PATH: String - Caminho da pasta onde será armazenado o Log
-# PORT_NUMBER: String - Porta para redirecionamento da sua URL de autenticação do OAuth2, valor padrão é 3031
-# LANGUAGE: String - Idioma da resposta do Ai Studio, valor padrão é PT-BR (suporta apenas português e inglês atualmente)
+# Other optional configurations
+# CLEAR_TMP: Boolean - Defines if the content of the tmp folder will be deleted after execution
+# LOG_PATH: String - Path to the folder where the Log will be stored
+# PORT_NUMBER: String - Port for redirection of your OAuth2 authentication URL, default value is 3031
+# LANGUAGE: String - Language of the Ai Studio response, default value is PT-BR (currently only supports Portuguese and English)
 ```
 
-4. **Crie os arquivos JSON de credenciais**:
+4. **Create the JSON credential files**:
 
-Siga as instruções em [este tutorial](https://developers.google.com/workspace/guides/create-credentials?hl=pt-br) do Google para criar os arquivos JSON de credenciais. Remova o "_example" dos nomes dos seus arquivos.
+Follow the instructions in [this tutorial](https://developers.google.com/workspace/guides/create-credentials?hl=en) from Google to create the JSON credential files. Remove the "_example" from your file names.
 
-**Observações**:
+**Notes**:
 
-- A chave de API do Ai Studio pode ser obtida na sua conta do Google Cloud Platform.
+* The Ai Studio API key can be obtained from your Google Cloud Platform account.
 
-- O caminho da pasta de vídeos no Google Drive deve ser ajustado de acordo com a sua organização.
+* The path to the video folder on Google Drive should be adjusted according to your organization.
 
-- As configurações opcionais no arquivo `.env` podem ser personalizadas de acordo com suas necessidades.
+* The optional configurations in the `.env` file can be customized according to your needs.
 
-## Utilização
+## Usage
 
-1. **Execute o script**:
+1. **Run the script**:
 
 ```bash
 python main.py
 ```
 
-2. **Siga as instruções na tela**:
-- Autentique-se com sua conta do Google.
+2. **Follow the on-screen instructions**:
+- Authenticate with your Google Account.
 
-- Informe os emails dos destinatários que receberão os resumos.
+- Enter the email addresses of the recipients who will receive the summaries.
 
-**O Summit processará suas gravações de reuniões e enviará os resumos por email para os destinatários especificados.**
+**Summit will process your meeting recordings and send the summaries via email to the specified recipients.**
 
-## Como funciona
+## How it Works
 
-1. **O Summit acessa o Google Drive**: Busca automaticamente por arquivos de vídeo na pasta configurada no arquivo `.env`.
+1. **Summit accesses Google Drive**: It automatically searches for video files in the folder configured in the `.env` file.
 
-2. **Processamento de cada vídeo**:
-- **Armazenamento local**: O vídeo é armazenado localmente no computador.
+2. **Processing each video**:
+- **Local storage**: The video is stored locally on the computer.
 
-- **Extração de áudio**: Somente o áudio é extraído do vídeo para reduzir o uso de tokens da API do Ai Studio.
+- **Audio extraction**: Only the audio is extracted from the video to reduce the use of Ai Studio API tokens.
 
-- **Análise do Ai Studio**: O arquivo de áudio é enviado para o Ai Studio, que gera um resumo da reunião.
+- **Ai Studio analysis**: The audio file is sent to Ai Studio, which generates a summary of the meeting.
 
-- **Armazenamento do resumo**: O resumo é armazenado em uma lista.
-3. **Envio de emails**:
-- **Criação de emails**: Para cada resumo, um email é criado com o conteúdo do resumo e os destinatários informados.
+- **Summary storage**: The summary is stored in a list.
 
-- **Envio via API do Gmail**: Os emails são enviados para os destinatários usando a API do Gmail.
+3. **Sending emails**:
+- **Email creation**: For each summary, an email is created with the content of the summary and the informed recipients.
 
-## Observações
+- **Sending via Gmail API**: Emails are sent to the recipients using the Gmail API.
 
-- O Summit está em desenvolvimento e novas funcionalidades serão adicionadas em breve.
+## Notes
 
-- Se você encontrar algum problema, por favor, envie um relatório de bug no repositório do GitHub.
+- Summit can be used for any meeting platform. Just store the recordings in Google Drive.
 
-## Contato
+- Summit is under development and new features will be added soon.
 
-Para obter mais informações sobre o Summit ou para relatar problemas, você pode entrar em contato conosco através dos seguintes canais:
+- If you encounter any problems, please submit a bug report in the GitHub repository.
+
+## Contact
+
+For more information about Summit or to report issues, you can contact us through the following channels:
 
 - **LinkedIn:** [Fellipe Machado](https://www.linkedin.com/in/fellipe-luz/)
 - **Email:** fellipe.luz.machado@gmail.com
 
-Agradecemos seu interesse no Summit!
-
-
+Thank you for your interest in Summit!
